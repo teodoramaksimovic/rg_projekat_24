@@ -33,7 +33,7 @@ void MainController::initialize() {
 
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
     auto camera = graphics->camera();
-    camera->Position = glm::vec3(0.0f, 0.0f, 0.3f);
+    camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
 }
 
 bool MainController::loop() {

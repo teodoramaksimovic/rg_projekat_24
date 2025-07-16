@@ -140,7 +140,7 @@ void MainController::update_toy() {
         toyMoveTimer += platform->dt();
 
         if (toyMoveTimer > 1.0f) {
-            toyOffset +=0.07f;
+            toyOffset += 0.07f;
             toyMove = false;
         }
     }
@@ -230,8 +230,8 @@ void MainController::setup_lighting() {
         modelShader->set_vec3("spotLight.ambient", glm::vec3(0.0f));
         modelShader->set_vec3("spotLight.diffuse", glm::vec3(0.0f));
         modelShader->set_vec3("spotLight.specular", glm::vec3(0.0f));
-        spotlightRedComponentAmb=0.2f;
-        spotlightRedComponentDif=1.0f;
+        spotlightRedComponentAmb = 0.2f;
+        spotlightRedComponentDif = 1.0f;
     }
 
     modelShader->set_float("material_shininess", 32.0f);

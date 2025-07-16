@@ -132,6 +132,7 @@ void MainController::update() {
     update_camera();
     update_spotlight();
     update_spotlight_color();
+    update_toy();
 }
 
 void MainController::begin_draw() {

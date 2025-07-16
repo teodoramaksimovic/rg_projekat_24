@@ -23,6 +23,8 @@ class MainController : public engine::core::Controller {
 
     void update_spotlight_color();
 
+    void update_toy();
+
     void update() override;
 
     void begin_draw() override;
@@ -42,6 +44,11 @@ private:
 
     float spotlightRedComponentAmb = 0.2f;
     float spotlightRedComponentDif = 1.0f;
+
+    bool toyMove = false;
+    float toyOffset = 0.0f;
+    float toyMoveTimer = 0.0f;
+
 
 public:
     std::string_view name() const override {

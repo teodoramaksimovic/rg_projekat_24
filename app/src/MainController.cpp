@@ -7,7 +7,6 @@
 #include "engine/graphics/OpenGL.hpp"
 #include "engine/platform/PlatformController.hpp"
 #include "engine/resources/ResourcesController.hpp"
-#include "spdlog/spdlog.h"
 #include <MainController.hpp>
 
 
@@ -113,6 +112,12 @@ void MainController::update_spotlight() {
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
     if (platform->key(engine::platform::KeyId::KEY_L).state() == engine::platform::Key::State::JustPressed) {
         spotlightEnabled = !spotlightEnabled;
+
+        if (!spotlightEnabled) {
+            toyOffset = 0.0f;
+            toyMove = false;
+            toyMoveTimer = 0.0f;
+        }
     }
 }
 
@@ -124,6 +129,19 @@ void MainController::update_spotlight_color() {
         if (spotlightRedComponentDif > 2.0f) {
             spotlightRedComponentAmb = 0.2f;
             spotlightRedComponentDif = 1.0f;
+        }
+        toyMove = true;
+        toyMoveTimer = 0.0f;
+    }
+}
+void MainController::update_toy() {
+    if (toyMove) {
+        auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+        toyMoveTimer += platform->dt();
+
+        if (toyMoveTimer > 1.0f) {
+            toyOffset +=0.07f;
+            toyMove = false;
         }
     }
 }
@@ -155,7 +173,7 @@ void MainController::draw_toy() {
     shader->set_mat4("projection", graphics->projection_matrix());
     shader->set_mat4("view", graphics->camera()->view_matrix());
     glm::mat4 modelIgracka = glm::mat4(1.0f);
-    modelIgracka = glm::translate(modelIgracka, glm::vec3(-0.45f, -1.035, -2.8f));
+    modelIgracka = glm::translate(modelIgracka, glm::vec3(-0.45f + toyOffset, -1.035, -2.8f));
     modelIgracka = glm::scale(modelIgracka, glm::vec3(0.4f));
     shader->set_mat4("model", modelIgracka);
     toyModel->draw(shader);

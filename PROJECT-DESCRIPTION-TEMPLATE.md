@@ -9,6 +9,7 @@ The spotlight features customizable color control - pressing the R key cycles th
 red component intensities (from 0.2/1.0 to 1.2/2.0 in 0.1 increments), allowing adjustment of 
 the spotlight's color from cool blueish to warm reddish tones. 
 When the spotlight is activated, a toy model appears in the scene.
+Toy moves slightly to the right 1 second after pressing the R key
 
 ## Controls
 
@@ -16,7 +17,7 @@ ESC -> Exit
 G -> GUI enable
 W -> Camera forward, S -> Camera backward, A -> Camera left, D -> Camera right
 L -> Spotlight on/off
-R -> Increase spotlight red component  
+R -> Increase spotlight red component  and move toy slightly to the right after 1 second
 
 
 ## Features

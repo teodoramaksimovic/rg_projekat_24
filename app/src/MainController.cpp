@@ -8,6 +8,7 @@
 #include "engine/platform/PlatformController.hpp"
 #include "engine/resources/ResourcesController.hpp"
 #include <MainController.hpp>
+#include "ToyController.hpp"
 
 
 namespace app {
@@ -33,6 +34,9 @@ void MainController::initialize() {
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
     auto camera = graphics->camera();
     camera->Position = glm::vec3(0.0f, 0.3f, 3.5f);
+
+    auto toyController = engine::core::Controller::get<ToyController>();
+    toyController->initialize();
 }
 
 bool MainController::loop() {
@@ -203,6 +207,7 @@ void MainController::draw_streetlamp() {
 void MainController::setup_lighting() {
     auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
+    auto toyController = engine::core::Controller::get<ToyController>();
 
     engine::resources::Shader *modelShader = resources->shader("basic");
 
@@ -221,6 +226,8 @@ void MainController::setup_lighting() {
     modelShader->set_float("spotLight.constant", 1.0f);
     modelShader->set_float("spotLight.linear", 0.045f);
     modelShader->set_float("spotLight.quadratic", 0.0075f);
+
+    bool spotlightEnabled = toyController->is_spotlight_enabled();
 
     if (spotlightEnabled) {
         modelShader->set_vec3("spotLight.ambient", glm::vec3(spotlightRedComponentAmb, 0.2f, 0.1f));

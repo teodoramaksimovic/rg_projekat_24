@@ -26,6 +26,17 @@ void ToyController::poll_events() {
     }
 }
 void ToyController::update() {
+    switch (currentState) {
+        case State::STILL:
+            update_still();
+            break;
+        case State::MOVING:
+            update_moving();
+            break;
+        case State::WAITING:
+            update_waiting();
+            break;
+    }
 }
 void ToyController::trigger_movement() {
     if (currentState == State::STILL || currentState == State::MOVING) {
@@ -49,6 +60,10 @@ void ToyController::toggle_spotlight() {
         transition_to_state(State::STILL);
         spdlog::info("Toy: FSM interrupted, returning to IDLE");
     }
+}
+void ToyController::update_still() {
+}
+void ToyController::update_moving() {
 }
 void ToyController::transition_to_state(State newState) {
     currentState = newState;

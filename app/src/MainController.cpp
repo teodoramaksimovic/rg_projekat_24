@@ -123,7 +123,7 @@ void MainController::update_spotlight() {
 
 void MainController::update_spotlight_color() {
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
-    if (platform->key(engine::platform::KeyId::KEY_R).state() == engine::platform::Key::State::JustPressed) {
+    if (platform->key(engine::platform::KeyId::KEY_C).state() == engine::platform::Key::State::JustPressed) {
         spotlightRedComponentAmb += 0.1f;
         spotlightRedComponentDif += 0.1f;
         if (spotlightRedComponentDif > 2.0f) {

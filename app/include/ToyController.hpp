@@ -22,6 +22,10 @@ public:
     void trigger_movement();
     void toggle_spotlight();
 
+    bool is_spotlight_enabled() const { return spotlightEnabled; }
+    State currentState;
+    float toyOffset;
+    bool spotlightEnabled;
     void update_still();
     void update_moving();
     void update_waiting();

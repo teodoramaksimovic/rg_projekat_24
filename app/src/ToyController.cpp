@@ -30,6 +30,14 @@ void ToyController::update() {
 void ToyController::trigger_movement() {
 }
 void ToyController::toggle_spotlight() {
+    if (currentState == State::STILL) {
+        spotlightEnabled = !spotlightEnabled;
+    } else if (currentState == State::MOVING || currentState == State::WAITING) {
+        spotlightEnabled = false;
+        toyOffset = 0.0f;
+        transition_to_state(State::STILL);
+        spdlog::info("Toy: FSM interrupted, returning to IDLE");
+    }
 }
 void ToyController::transition_to_state(State newState) {
     currentState = newState;

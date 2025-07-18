@@ -17,7 +17,7 @@ void ToyController::initialize() {
 void ToyController::poll_events() {
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
 
-    if (platform->key(engine::platform::KeyId::KEY_R).state() == engine::platform::Key::State::JustPressed) {
+    if (platform->key(engine::platform::KeyId::KEY_R).state() == engine::platform::Key::State::JustPressed && spotlightEnabled) {
         trigger_movement();
     }
 
@@ -28,6 +28,17 @@ void ToyController::poll_events() {
 void ToyController::update() {
 }
 void ToyController::trigger_movement() {
+    if (currentState == State::STILL || currentState == State::MOVING) {
+        if (currentState == State::STILL) {
+            spotlightEnabled = true;
+            transition_to_state(State::MOVING);
+        }
+        toyOffset += 0.07;
+
+        if (toyOffset >= 0.91f) {
+            toyOffset = 0.91f;
+        }
+    }
 }
 void ToyController::toggle_spotlight() {
     if (currentState == State::STILL) {

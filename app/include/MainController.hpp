@@ -40,15 +40,8 @@ class MainController : public engine::core::Controller {
     void end_draw() override;
 
 private:
-    bool spotlightEnabled = false;
-
     float spotlightRedComponentAmb = 0.2f;
     float spotlightRedComponentDif = 1.0f;
-
-    bool toyMove = false;
-    float toyOffset = 0.0f;
-    float toyMoveTimer = 0.0f;
-
 
 public:
     std::string_view name() const override {

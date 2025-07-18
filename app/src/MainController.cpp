@@ -162,8 +162,11 @@ void MainController::begin_draw() {
 }
 
 void MainController::draw_toy() {
+    auto toyController = engine::core::Controller::get<ToyController>();
+    bool spotlightEnabled = toyController->is_spotlight_enabled();
     if (!spotlightEnabled)
         return;
+
     auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
 
@@ -177,7 +180,7 @@ void MainController::draw_toy() {
     shader->set_mat4("projection", graphics->projection_matrix());
     shader->set_mat4("view", graphics->camera()->view_matrix());
     glm::mat4 modelIgracka = glm::mat4(1.0f);
-    modelIgracka = glm::translate(modelIgracka, glm::vec3(-0.45f + toyOffset, -1.035, -2.8f));
+    modelIgracka = glm::translate(modelIgracka, glm::vec3(-0.45f + toyController->get_toy_offset(), -1.035, -2.8f));
     modelIgracka = glm::scale(modelIgracka, glm::vec3(0.4f));
     shader->set_mat4("model", modelIgracka);
     toyModel->draw(shader);

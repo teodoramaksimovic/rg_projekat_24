@@ -10,6 +10,11 @@ namespace app {
 
 class ToyController : public engine::core::Controller {
 public:
+    enum class State {
+        STILL,
+        MOVING,
+        WAITING
+    };
     void initialize() override;
     void poll_events() override;
     void update() override;
@@ -17,6 +22,10 @@ public:
     void trigger_movement();
     void toggle_spotlight();
 
+    void update_still();
+    void update_moving();
+    void update_waiting();
+    void transition_to_state(State newState);
 };
 
 } // app

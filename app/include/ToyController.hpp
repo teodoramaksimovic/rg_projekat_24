@@ -41,6 +41,6 @@ private:
     void transition_to_state(State newState);
 };
 
-} // app
+}// namespace app
 
-#endif //TOYCONTROLLER_HPP
+#endif//TOYCONTROLLER_HPP

@@ -6,8 +6,8 @@
 #include "engine/platform/PlatformController.hpp"
 #include "spdlog/spdlog.h"
 
-#include <engine/core/Controller.hpp>
 #include "engine/platform/PlatformController.hpp"
+#include <engine/core/Controller.hpp>
 
 namespace app {
 

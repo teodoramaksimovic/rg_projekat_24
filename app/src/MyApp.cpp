@@ -4,6 +4,7 @@
 
 #include "GuiController.hpp"
 #include "MainController.hpp"
+#include "ToyController.hpp"
 
 
 #include <MyApp.hpp>
@@ -15,7 +16,9 @@ void MyApp::app_setup() {
     spdlog::info("App setup completed!");
     auto main_controller = register_controller<app::MainController>();
     auto gui_controller = register_controller<app::GUIController>();
+    auto toy_controller = register_controller<app::ToyController>();
     main_controller->after(engine::core::Controller::get<engine::core::EngineControllersEnd>());
     main_controller->before(gui_controller);
+    main_controller->before(toy_controller);
 }
 }// namespace app

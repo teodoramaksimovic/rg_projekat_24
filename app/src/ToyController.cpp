@@ -36,6 +36,9 @@ void ToyController::update() {
         case State::WAITING:
             update_waiting();
             break;
+        case State::LAMP_OFF:
+            update_lamp_off();
+            break;
     }
 }
 void ToyController::trigger_movement() {
@@ -46,24 +49,43 @@ void ToyController::trigger_movement() {
         }
         toyOffset += 0.07;
 
-        if (toyOffset >= 0.91f) {
-            toyOffset = 0.91f;
+        if (toyOffset >= 1.55f) {
+            toyOffset = 1.55f;
+            transition_to_state(State::WAITING);
         }
     }
 }
 void ToyController::toggle_spotlight() {
     if (currentState == State::STILL) {
         spotlightEnabled = !spotlightEnabled;
-    } else if (currentState == State::MOVING || currentState == State::WAITING) {
+    } else if (currentState == State::MOVING || currentState == State::WAITING || currentState == State::LAMP_OFF) {
         spotlightEnabled = false;
         toyOffset = 0.0f;
         transition_to_state(State::STILL);
-        spdlog::info("Toy: FSM interrupted, returning to IDLE");
     }
 }
 void ToyController::update_still() {
 }
 void ToyController::update_moving() {
+}
+void ToyController::update_waiting() {
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+    moveTimer += platform->dt();
+
+    if (moveTimer >= 2.0f) {
+        transition_to_state(State::LAMP_OFF);
+    }
+}
+
+void ToyController::update_lamp_off() {
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+    moveTimer += platform->dt();
+
+    if (moveTimer >= 1.0f) {
+        spotlightEnabled = false;
+        toyOffset = 0.0f;
+        transition_to_state(State::STILL);
+    }
 }
 void ToyController::transition_to_state(State newState) {
     currentState = newState;
@@ -78,6 +100,9 @@ void ToyController::transition_to_state(State newState) {
             break;
         case State::WAITING:
             spdlog::info("Igracka -> WAITING");
+            break;
+        case State::LAMP_OFF:
+            spdlog::info("Igracka -> LAMP_OFF");
             break;
     }
 }

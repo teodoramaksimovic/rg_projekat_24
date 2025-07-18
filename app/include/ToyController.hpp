@@ -13,7 +13,8 @@ public:
     enum class State {
         STILL,
         MOVING,
-        WAITING
+        WAITING,
+        LAMP_OFF
     };
     void initialize() override;
     void poll_events() override;
@@ -35,6 +36,8 @@ private:
     void update_still();
     void update_moving();
     void update_waiting();
+    void update_lamp_off();
+
     void transition_to_state(State newState);
 };
 

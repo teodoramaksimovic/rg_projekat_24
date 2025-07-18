@@ -3,12 +3,12 @@
 //
 
 #include "GuiController.hpp"
+#include "ToyController.hpp"
 #include "engine/graphics/GraphicsController.hpp"
 #include "engine/graphics/OpenGL.hpp"
 #include "engine/platform/PlatformController.hpp"
 #include "engine/resources/ResourcesController.hpp"
 #include <MainController.hpp>
-#include "ToyController.hpp"
 
 
 namespace app {
@@ -112,19 +112,6 @@ void MainController::update_camera() {
     }
 }
 
-void MainController::update_spotlight() {
-    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
-    if (platform->key(engine::platform::KeyId::KEY_L).state() == engine::platform::Key::State::JustPressed) {
-        spotlightEnabled = !spotlightEnabled;
-
-        if (!spotlightEnabled) {
-            toyOffset = 0.0f;
-            toyMove = false;
-            toyMoveTimer = 0.0f;
-        }
-    }
-}
-
 void MainController::update_spotlight_color() {
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
     if (platform->key(engine::platform::KeyId::KEY_C).state() == engine::platform::Key::State::JustPressed) {
@@ -134,27 +121,12 @@ void MainController::update_spotlight_color() {
             spotlightRedComponentAmb = 0.2f;
             spotlightRedComponentDif = 1.0f;
         }
-        toyMove = true;
-        toyMoveTimer = 0.0f;
-    }
-}
-void MainController::update_toy() {
-    if (toyMove) {
-        auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
-        toyMoveTimer += platform->dt();
-
-        if (toyMoveTimer > 1.0f) {
-            toyOffset += 0.07f;
-            toyMove = false;
-        }
     }
 }
 
 void MainController::update() {
     update_camera();
-    update_spotlight();
     update_spotlight_color();
-    update_toy();
 }
 
 void MainController::begin_draw() {

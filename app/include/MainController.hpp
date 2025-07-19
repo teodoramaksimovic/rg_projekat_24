@@ -19,11 +19,7 @@ class MainController : public engine::core::Controller {
 
     void update_camera();
 
-    void update_spotlight();
-
     void update_spotlight_color();
-
-    void update_toy();
 
     void update() override;
 

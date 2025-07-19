@@ -36,23 +36,18 @@ void ToyController::update() {
         case State::WAITING:
             update_waiting();
             break;
+        case State::WAITING_AT_END:
+            update_waiting_at_end();
+            break;
         case State::LAMP_OFF:
             update_lamp_off();
             break;
     }
 }
 void ToyController::trigger_movement() {
-    if (currentState == State::STILL || currentState == State::MOVING) {
-        if (currentState == State::STILL) {
-            spotlightEnabled = true;
-            transition_to_state(State::MOVING);
-        }
-        toyOffset += 0.07;
-
-        if (toyOffset >= 1.55f) {
-            toyOffset = 1.55f;
-            transition_to_state(State::WAITING);
-        }
+    if (currentState == State::STILL) {
+        spotlightEnabled = true;
+        transition_to_state(State::MOVING);
     }
 }
 void ToyController::toggle_spotlight() {
@@ -67,6 +62,36 @@ void ToyController::toggle_spotlight() {
 void ToyController::update_still() {
 }
 void ToyController::update_moving() {
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+
+    float moveSpeed = 0.5f;
+
+    if (!returningToStart) {
+        toyOffset += moveSpeed * platform->dt();
+
+        if (toyOffset >= 1.55f) {
+            toyOffset = 1.55f;
+            transition_to_state(State::WAITING_AT_END);
+        }
+    } else {
+        toyOffset -= moveSpeed * platform->dt();
+
+        if (toyOffset <= 0.0f) {
+            toyOffset = 0.0f;
+            returningToStart = false;
+            transition_to_state(State::WAITING);
+        }
+    }
+}
+void ToyController::update_waiting_at_end() {
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+    moveTimer += platform->dt();
+
+    if (moveTimer >= 1.0f) {
+        returningToStart = true;
+        transition_to_state(State::MOVING);
+    }
+
 }
 void ToyController::update_waiting() {
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
@@ -97,6 +122,9 @@ void ToyController::transition_to_state(State newState) {
             break;
         case State::MOVING:
             spdlog::info("Igracka -> MOVING");
+            break;
+        case State::WAITING_AT_END:
+            spdlog::info("Igracka -> WAITING_AT_END");
             break;
         case State::WAITING:
             spdlog::info("Igracka -> WAITING");

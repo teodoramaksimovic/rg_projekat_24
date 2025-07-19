@@ -13,6 +13,7 @@ public:
     enum class State {
         STILL,
         MOVING,
+        WAITING_AT_END,
         WAITING,
         LAMP_OFF
     };
@@ -33,8 +34,11 @@ private:
     float moveTimer;
     bool spotlightEnabled;
 
+    bool returningToStart = false;
+
     void update_still();
     void update_moving();
+    void update_waiting_at_end();
     void update_waiting();
     void update_lamp_off();
 

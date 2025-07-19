@@ -9,8 +9,9 @@ The spotlight features customizable color control - pressing the R key cycles th
 red component intensities (from 0.2/1.0 to 1.2/2.0 in 0.1 increments), allowing adjustment of 
 the spotlight's color from cool blueish to warm reddish tones. 
 When the spotlight is activated, a toy model appears in the scene.
-Toy moves slightly to the right after pressing the R key, until the end of the bench is reached.
-Then, after 2 seconds, lamp turns off.
+Toy moves continuously at constant speed, until the end of the bench is reached. At the end, 
+it waits 1 second then returns to the beginning.
+After 2 seconds, lamp turns off.
 
 ## Controls
 
@@ -19,7 +20,7 @@ G -> GUI enable
 W -> Camera forward, S -> Camera backward, A -> Camera left, D -> Camera right
 L -> Spotlight on/off
 C -> Increase spotlight red component  
-R -> Move toy slightly to the right
+R -> Toy moves continuously towards the end of the bench
 
 
 ## Features

@@ -4,6 +4,7 @@
 
 #include "GuiController.hpp"
 #include "ToyController.hpp"
+#include "engine/graphics/Framebuffer.hpp"
 #include "engine/graphics/GraphicsController.hpp"
 #include "engine/graphics/OpenGL.hpp"
 #include "engine/platform/PlatformController.hpp"
@@ -37,6 +38,8 @@ void MainController::initialize() {
 
     auto toyController = engine::core::Controller::get<ToyController>();
     toyController->initialize();
+
+    fb.setup(platform->window()->width(), platform->window()->height());
 }
 
 bool MainController::loop() {
@@ -130,7 +133,7 @@ void MainController::update() {
 }
 
 void MainController::begin_draw() {
-    engine::graphics::OpenGL::clear_buffers();
+    fb.begin_rendering();
 }
 
 void MainController::draw_toy() {
@@ -228,6 +231,10 @@ void MainController::draw() {
 }
 
 void MainController::end_draw() {
+    auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
+    engine::resources::Shader *screenShader = resources->shader("postprocessing");
+    fb.end_rendering(screenShader);
+
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
     platform->swap_buffers();
 }

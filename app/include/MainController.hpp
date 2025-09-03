@@ -5,6 +5,7 @@
 #ifndef MAINCONTROLLER_HPP
 #define MAINCONTROLLER_HPP
 #include <engine/core/Controller.hpp>
+#include <engine/graphics/Framebuffer.hpp>
 
 namespace app {
 
@@ -35,14 +36,16 @@ class MainController : public engine::core::Controller {
 
     void end_draw() override;
 
-private:
-    float spotlightRedComponentAmb = 0.2f;
-    float spotlightRedComponentDif = 1.0f;
-
 public:
+
     std::string_view name() const override {
         return "app:MainController";
     }
+private:
+    engine::graphics::Framebuffer fb;
+
+    float spotlightRedComponentAmb = 0.2f;
+    float spotlightRedComponentDif = 1.0f;
 };
 
 }// namespace app

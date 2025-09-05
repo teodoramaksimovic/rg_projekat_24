@@ -33,7 +33,7 @@ R -> Toy moves continuously towards the end of the bench
 
 ### Group A:
 
-[ ] Frame-buffers with post-processing   
+[+] Frame-buffers with post-processing   
 [ ] Instancing  
 [ ] Off-screen Anti-Aliasing  
 [ ] Parallax Mapping

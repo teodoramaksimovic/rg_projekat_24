@@ -21,6 +21,7 @@ W -> Camera forward, S -> Camera backward, A -> Camera left, D -> Camera right
 L -> Spotlight on/off
 C -> Increase spotlight red component  
 R -> Toy moves continuously towards the end of the bench
+P -> Post-processing on/off
 
 
 ## Features

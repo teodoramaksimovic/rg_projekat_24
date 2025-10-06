@@ -22,6 +22,8 @@ class MainController : public engine::core::Controller {
 
     void update_spotlight_color();
 
+    void update_pp();
+
     void update() override;
 
     void begin_draw() override;
@@ -36,16 +38,19 @@ class MainController : public engine::core::Controller {
 
     void end_draw() override;
 
-public:
+    void toggle_postprocessing();
 
+public:
     std::string_view name() const override {
         return "app:MainController";
     }
+
 private:
     engine::graphics::Framebuffer fb;
 
     float spotlightRedComponentAmb = 0.2f;
     float spotlightRedComponentDif = 1.0f;
+    bool postProcessingEnabled = false;
 };
 
 }// namespace app

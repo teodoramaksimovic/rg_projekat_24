@@ -9,6 +9,7 @@
 #include "engine/graphics/OpenGL.hpp"
 #include "engine/platform/PlatformController.hpp"
 #include "engine/resources/ResourcesController.hpp"
+#include "spdlog/spdlog.h"
 #include <MainController.hpp>
 
 
@@ -127,13 +128,25 @@ void MainController::update_spotlight_color() {
     }
 }
 
+void MainController::update_pp() {
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+    if (platform->key(engine::platform::KeyId::KEY_P).state() == engine::platform::Key::State::JustPressed) {
+        toggle_postprocessing();
+    }
+}
+
 void MainController::update() {
     update_camera();
     update_spotlight_color();
+    update_pp();
 }
 
 void MainController::begin_draw() {
-    fb.begin_rendering();
+    if (postProcessingEnabled) {
+        fb.begin_rendering();
+    } else {
+        fb.clear_default_framebuffer();
+    }
 }
 
 void MainController::draw_toy() {
@@ -231,12 +244,19 @@ void MainController::draw() {
 }
 
 void MainController::end_draw() {
-    auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
-    engine::resources::Shader *screenShader = resources->shader("postprocessing");
-    fb.end_rendering(screenShader);
+    if (postProcessingEnabled) {
+        auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
+        engine::resources::Shader *screenShader = resources->shader("postprocessing");
+        fb.end_rendering(screenShader);
+    }
 
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
     platform->swap_buffers();
+}
+
+void MainController::toggle_postprocessing() {
+    postProcessingEnabled = !postProcessingEnabled;
+    spdlog::info(postProcessingEnabled ? "PP ON" : "PP OFF");
 }
 
 }// namespace app

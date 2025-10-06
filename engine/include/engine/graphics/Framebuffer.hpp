@@ -12,6 +12,7 @@ class Framebuffer {
         void setup(int width, int height);
         void begin_rendering();
         void end_rendering(resources::Shader *post_process_shader);
+        void clear_default_framebuffer();
 
     private:
         unsigned int m_frame_buffer_id;

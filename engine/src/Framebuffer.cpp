@@ -33,6 +33,13 @@ void Framebuffer::end_rendering(resources::Shader *post_process_shader) {
     CHECKED_GL_CALL(glBindVertexArray, 0);
 }
 
+void Framebuffer::clear_default_framebuffer() {
+    CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, 0);
+    CHECKED_GL_CALL(glEnable, GL_DEPTH_TEST);
+    CHECKED_GL_CALL(glClearColor, 0.1f, 0.1f, 0.1f, 1.0f);
+    CHECKED_GL_CALL(glClear, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void Framebuffer::init_resources(int width, int height) {
     CHECKED_GL_CALL(glGenFramebuffers, 1, &m_frame_buffer_id);
     CHECKED_GL_CALL(glGenTextures, 1, &m_color_texture);

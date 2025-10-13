@@ -1,11 +1,23 @@
 {
   "resources": {
     "models": {
+      "floor" : {
+        "path" : "seamless__floor_tiled_texture_iv/scene.gltf"
+      },
+      "bench" : {
+        "path" : "bench__park_-_14mb/scene.gltf"
+      },
+      "streetlamp" : {
+        "path" : "street_lamp/scene.gltf"
+      },
+      "toy" : {
+        "path" : "toy_rabbit/scene.gltf"
+      }
     }
   },
   "window": {
-    "height": 600,
-    "title": "Hello, window!",
-    "width": 800
+    "height": 700,
+    "title": "Spooky",
+    "width": 1300
   }
 }
